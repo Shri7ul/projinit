@@ -2,8 +2,26 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[project]
+name = "projinit"
+version = "0.1.0"
+description = "Bootstrap Python projects with auto-generated structure and README"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+aauthors = [
+  { name = "Shriful Islam", email = "smislam5959@email.com" }
+]
 
-[tool.mypy]
-ignore_missing_imports = true
+keywords = ["project-generator", "bootstrap", "python", "template"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/Shri7ul/projinit"
+
+[project.scripts]
+projinit = "projinit.init:init"
