@@ -10,10 +10,6 @@ authors = [
   { name = "Shriful Islam" }
 ]
 
-maintainers = [
-  { name = "Shriful Islam", email = "smislam5959@gmail.com" }
-]
-
 keywords = ["project-generator", "bootstrap", "python", "template"]
 
 classifiers = [
