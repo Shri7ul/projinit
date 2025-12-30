@@ -15,7 +15,7 @@ while True:
 
 logging.info(f"Creating project structure for: {project_name}")
 
-files = [
+FILES = [
     f"src/{project_name}/__init__.py",
 
     "tests/__init__.py",
@@ -34,16 +34,14 @@ files = [
     ".gitignore",
 ]
 
-for file_path in files:
-    file_path = Path(file_path)
-    dir_path = file_path.parent
-
-    if not dir_path.exists():
-        os.makedirs(dir_path, exist_ok=True)
-        logging.info(f"Created directory: {dir_path}")
+for file in FILES:
+    file_path = Path(file)
+    file_path.parent.mkdir(parents=True, exist_ok=True)
 
     if not file_path.exists():
         file_path.touch()
         logging.info(f"Created file: {file_path}")
+    else:
+        logging.info(f"File already exists: {file_path}")
 
-logging.info("Project skeleton created successfully.")
+logging.info("✅ Project skeleton created successfully.")
