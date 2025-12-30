@@ -1,7 +1,3 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "projinit"
 version = "0.1.0"
@@ -9,11 +5,17 @@ description = "Bootstrap Python projects with auto-generated structure and READM
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
-aauthors = [
-  { name = "Shriful Islam", email = "smislam5959@email.com" }
+
+authors = [
+  { name = "Shriful Islam" }
+]
+
+maintainers = [
+  { name = "Shriful Islam", email = "smislam5959@gmail.com" }
 ]
 
 keywords = ["project-generator", "bootstrap", "python", "template"]
+
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
