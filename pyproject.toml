@@ -1,6 +1,6 @@
 [project]
 name = "projinit"
-version = "0.1.0"
+version = "0.1.1"
 description = "Bootstrap Python projects with auto-generated structure and README"
 readme = "README.md"
 requires-python = ">=3.8"
