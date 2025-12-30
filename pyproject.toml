@@ -1,6 +1,6 @@
 [project]
-name = "pyprojinit"
-version = "v0.1.3"
+name = "pyforge"
+version = "0.1.4"
 description = "Bootstrap Python projects with auto-generated structure and README"
 readme = "README.md"
 requires-python = ">=3.8"
