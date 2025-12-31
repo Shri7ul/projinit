@@ -30,47 +30,53 @@ def _write(path: Path, content: str, overwrite: bool = True):
     path.write_text(content, encoding="utf-8")
 
 
+def _ensure_dir(path: Path):
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def _ensure_file(path: Path, content: str = ""):
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
 def generate_project_from_base(
     project_name: str,
     env_name: str,
     python_version: str,
     run_command: str,
+    preset: dict,
     overwrite_readme: bool = True,
 ):
-    # IMPORTANT: always operate on user's current directory
     root = Path.cwd()
 
-    # --- src package structure ---
-    _write(
-        root / "src" / project_name / "__init__.py",
-        "# package\n",
-        overwrite=False,
-    )
+    # -------- folders --------
+    for folder in preset.get("folders", []):
+        folder_path = root / folder.format(project_name=project_name)
+        _ensure_dir(folder_path)
 
-    # --- .gitignore (never overwrite existing) ---
-    _write(
-        root / ".gitignore",
-        _read(".gitignore.txt"),
-        overwrite=False,
-    )
+    # -------- files --------
+    for file in preset.get("files", []):
+        file_path = root / file.format(project_name=project_name)
+        _ensure_file(file_path)
 
-    # --- requirements.txt (preserve if exists) ---
-    req = root / "requirements.txt"
-    if not req.exists():
-        req.write_text("", encoding="utf-8")
+    # -------- gitignore --------
+    _write(root / ".gitignore", _read(".gitignore.txt"), overwrite=False)
 
-    # --- README.md ---
+    # -------- requirements.txt --------
+    req_path = root / "requirements.txt"
+    if not req_path.exists() or not req_path.read_text().strip():
+        requirements = preset.get("requirements", [])
+        req_path.write_text("\n".join(requirements) + "\n", encoding="utf-8")
+
+    # -------- README --------
     readme_template = _read("README.md.txt")
-    rendered_readme = (
-        readme_template
-        .replace("{project_name}", project_name)
-        .replace("{env_name}", env_name)
-        .replace("{python_version}", python_version)
-        .replace("{run_command}", run_command or "# add run command")
+    readme = readme_template.format(
+        project_name=project_name,
+        env_name=env_name,
+        python_version=python_version,
+        run_command=run_command,
     )
+    _write(root / "README.md", readme, overwrite=overwrite_readme)
 
-    _write(
-        root / "README.md",
-        rendered_readme,
-        overwrite=overwrite_readme,
-    )
+    print("\n✔ Project structure created")
+    print("✔ Preset applied successfully")
