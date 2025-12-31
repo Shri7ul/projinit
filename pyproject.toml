@@ -1,6 +1,6 @@
 [project]
 name = "initforge"
-version = "0.1.6"
+version = "0.1.7"
 description = "Bootstrap Python projects with auto-generated structure and README"
 readme = "README.md"
 requires-python = ">=3.8"
