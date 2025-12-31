@@ -1,6 +1,6 @@
 [project]
 name = "initforge"
-version = "0.1.5"
+version = "0.1.6"
 description = "Bootstrap Python projects with auto-generated structure and README"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -24,3 +24,12 @@ Homepage = "https://github.com/Shri7ul/projinit"
 
 [project.scripts]
 projinit = "projinit.init:init"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+projinit = [
+  "templates/base/*.txt",
+  "templates/base/**/*.txt"
+]
