@@ -9,6 +9,7 @@ license = { text = "MIT" }
 authors = [
   { name = "Shriful Islam" }
 ]
+dependencies = ["pyyaml"]
 
 keywords = ["project-generator", "bootstrap", "python", "template"]
 
@@ -29,3 +30,5 @@ projinit = "projinit.init:init"
 # --- setuptools configuration ---
 [tool.setuptools]
 include-package-data = true
+
+

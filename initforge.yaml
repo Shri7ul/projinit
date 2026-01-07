@@ -1,0 +1,5 @@
+preset: ml
+python: 3.9
+env: yt_env
+run: python src/yt_transcriber/train.py
+overwrite_readme: true
