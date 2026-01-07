@@ -1,71 +1,147 @@
-## 🚀 initforge
+# InitForge 🚀  
+> Bootstrap Python projects in seconds — clean structure, zero chaos.
 
-initforge is a lightweight CLI tool that helps you bootstrap Python projects instantly — without repeating the same setup steps every time.
+InitForge is a CLI tool that automates the boring but necessary steps of starting a Python project:
 
-It generates a clean project structure and a ready-to-use README.md, so you can focus on building instead of configuring.
+- Creating a clean folder structure  
+- Generating a proper README  
+- Managing presets for different project types  
+- Helping beginners follow the same professional workflow every time  
 
-## ✨ Features
+---
 
-- 📁 Auto-detects project name from current directory
+## ✨ Why InitForge?
 
-- 🧱 Generates a clean Python project structure
+Every project usually follows the same flow:
 
-- 📝 Auto-creates a helpful README.md
+1. Create a GitHub repo  
+2. Clone it locally  
+3. Create a virtual environment  
+4. Set up folders  
+5. Add requirements  
+6. Write a README  
+7. Finally… start coding  
 
-- 🐍 Conda-friendly environment instructions
+InitForge turns this into **one command**.
 
-- ⚡ Simple, transparent, no hidden magic
-
-- 🖥️ Works on Windows & Linux
+---
 
 ## 📦 Installation
 
-Install directly from PyPI:
 ```bash
 pip install initforge
 ```
 
-## 🚀 Quick Start
+# ⚡ Quick Start
+Inside your cloned repo:
 
-Navigate to your project folder and run:
-```bash
+``` bash
 initforge
 ```
 
-You’ll be guided through a few simple prompts:
+## You’ll get an interactive menu:
 
-- Project name
+- Choose project type (Base / ML / Streamlit / Custom)
 
-- Conda environment name
+- Pick Python version
 
-- Python version
+- Set env name
 
-- Run command
+- Set run command
 
-- README overwrite confirmation
-
-That’s it — your project is ready.
+- Done.
 
 ---
 
-## 📁 Generated Structure (example)
-```yaml
-my_project/
-├── src/my_project/
-│   └── __init__.py
-├── tests/
-│   ├── unit/
-│   └── integration/
-├── requirements.txt
-├── README.md
-└── .gitignore
+# 🧩 Presets
+
+## Built-in presets
+
+- Base – clean Python project
+
+- ML / Data Science – notebooks, data, training structure
+
+- Streamlit App – ready for UI projects
+
+## Custom presets
+Create your own once, reuse forever:
+
+``` bash
+initforge
+→ Create preset
+```
+Your presets are stored at:
+
+``` bash
+~/.initforge/presets/
+```
+They automatically appear in the menu next time.
+
+---
+
+## 🔍 Find Files Tool
+Need a common file like `logger.py`, `config.py`, or a template?
+
+``` bash
+initforge
+→ Find file
+```
+InitForge searches across all presets and shows you where it lives.
+
+## ⚙️ Config Mode
+Run InitForge using a config file:
+
+``` bash
+initforge --config .initforge.yaml
+```
+Perfect for teams, templates, and automation.
+
+## 🧪 Dry Run
+Preview everything without touching your files:
+
+``` bash
+initforge --dry-run
 ```
 
-## 🛠️ Example Workflow
-```yaml
-conda create -n my_project python=3.10 -y
-conda activate my_project
+## 🛠 Example Workflow
+``` bash
+git clone your-repo
+cd your-repo
+initforge
+```
+
+Then:
+
+```bash
+conda create -n myenv python=3.10 -y
+conda activate myenv
 pip install -r requirements.txt
+python app.py
 ```
 
-Then start building 🚀
+## 🎯 Who is this for?
+-  students
+
+- Beginners who want structure
+
+- Developers tired of repeating the same setup
+
+- Teams who want consistency
+
+## 📌 Roadmap
+- Preset marketplace
+
+- Team preset sharing
+
+- GitHub Actions templates
+
+- Plugin system
+
+## 🧑‍💻 Author
+**Shriful Islam** (InHuman)  
+**Built with the goal of making project setup simple, repeatable, and beginner-friendly.**
+
+## 📜 License
+**MIT License**
+
+---

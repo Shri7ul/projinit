@@ -3,8 +3,11 @@ import argparse
 
 from projinit.generator import generate_project_from_base
 from projinit.presets import get_preset, list_presets
+from projinit.presets.builder import create_preset_interactive
+from projinit.presets.store import list_user_presets, load_user_preset
 from projinit.validators import validate_python_version, normalize_env_name
 from projinit.config import load_config, normalize_config, ConfigError
+from projinit.presets.finder import find_file_across_presets
 
 
 def init():
@@ -49,9 +52,10 @@ def init():
         config_data = normalize_config(raw_cfg, defaults)
         print(f"📄 Using config file: {args.config}")
 
-    # -------- preset --------
-    presets = list_presets()
+    # -------- presets --------
+    base_presets = list_presets()
 
+    # ========== PRESET SELECTION ==========
     if config_data:
         preset_key = config_data["preset"]
         preset = get_preset(preset_key)
@@ -63,24 +67,68 @@ def init():
         print(f"\n✔ Using preset (flag): {preset_key}")
 
     else:
-        print("\nSelect project type:")
-        for i, key in enumerate(presets, start=1):
+        print("\n— Built-in presets —")
+        for i, key in enumerate(base_presets, start=1):
             label = get_preset(key)["name"]
             print(f"{i}) {label}")
+
+        user_presets = list_user_presets()
+
+        if user_presets:
+            print("\n— Your presets —")
+            for i, k in enumerate(user_presets, start=len(base_presets) + 1):
+                print(f"{i}) {k}")
+
+        tool_start = len(base_presets) + len(user_presets) + 1
+
+        print("\n— Tools —")
+        print(f"{tool_start}) Create preset")
+        print(f"{tool_start + 1}) Find file")
 
         choice = input("Choice [1]: ").strip()
 
         try:
             index = int(choice) - 1 if choice else 0
-            preset_key = presets[index]
-        except (ValueError, IndexError):
+        except ValueError:
+            index = 0
+
+        total_presets = base_presets + user_presets
+
+        # ---- built-in + user presets ----
+        if 0 <= index < len(total_presets):
+            preset_key = total_presets[index]
+
+            if preset_key in base_presets:
+                preset = get_preset(preset_key)
+                print(f"\n✔ Using preset: {preset_key}")
+            else:
+                preset = load_user_preset(preset_key)
+                print(f"\n✔ Using custom preset: {preset_key}")
+
+        # ---- create preset ----
+        elif index == tool_start - 1:
+            new_key = create_preset_interactive()
+            if not new_key:
+                preset_key = "base"
+                preset = get_preset("base")
+            else:
+                preset_key = new_key
+                preset = load_user_preset(preset_key)
+                print(f"\n✔ Using new preset: {preset_key}")
+
+        # ---- find file ----
+        elif index == tool_start:
+            find_file_across_presets()
+            print("\nℹ️ Run initforge again to continue.")
+            return
+
+        # ---- fallback ----
+        else:
             print("⚠️ Invalid choice. Using base preset.")
             preset_key = "base"
+            preset = get_preset("base")
 
-        preset = get_preset(preset_key)
-        print(f"\n✔ Using preset: {preset_key}")
-
-    # -------- python + env --------
+    # ========== PYTHON + ENV ==========
     if config_data:
         python_version = validate_python_version(config_data["python"])
         env_name = normalize_env_name(config_data["env"], project_name)
@@ -91,7 +139,7 @@ def init():
         env_name = input(f"Conda env name [{project_name}]: ").strip()
         env_name = normalize_env_name(env_name, project_name)
 
-    # -------- run command + overwrite --------
+    # ========== RUN COMMAND + README ==========
     if config_data:
         run_command = config_data["run"] or preset["default_run"]
         overwrite_readme = bool(config_data["overwrite_readme"])
@@ -106,10 +154,9 @@ def init():
         overwrite_readme = overwrite != "n"
 
     # -------- decide config saving --------
-    # ONLY save when user explicitly passes --save-config
     save_config = bool(args.save_config)
 
-    # -------- generate --------
+    # ========== GENERATE ==========
     generate_project_from_base(
         project_name=project_name,
         env_name=env_name,

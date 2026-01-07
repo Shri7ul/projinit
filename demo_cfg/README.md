@@ -9,13 +9,13 @@ This project was bootstrapped using **projinit**.
 Create a new conda environment:
 
 ```bash
-conda create -n yt python=3.9 -y
+conda create -n ff python=3.8 -y
 ```
 
 Activate the environment:
 
 ``` bash
-conda activate yt
+conda activate ff
 ```
 📦 Install Dependencies
 ```bash
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ▶️ Run the Project
 ```bash
 
-python run.py
+l.py
 ```
 🧪 Run Tests (optional)
 ```bash
