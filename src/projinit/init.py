@@ -18,12 +18,18 @@ def init():
     parser.add_argument("--preset", help="Project preset (base / ml / streamlit)")
     parser.add_argument("--run", help="Run command (e.g. python app.py)")
     parser.add_argument("--config", help="Path to initforge YAML config file")
+    parser.add_argument("--dry-run", action="store_true", help="Preview only, no files written")
+    parser.add_argument(
+        "--save-config",
+        action="store_true",
+        help="Save this setup as .initforge.yaml for reuse",
+    )
 
     args = parser.parse_args()
 
     print(f"📁 Repo detected: {project_name}")
 
-    # -------- load config if provided --------
+    # -------- load config --------
     config_data = None
     if args.config:
         try:
@@ -43,7 +49,7 @@ def init():
         config_data = normalize_config(raw_cfg, defaults)
         print(f"📄 Using config file: {args.config}")
 
-    # -------- preset selection --------
+    # -------- preset --------
     presets = list_presets()
 
     if config_data:
@@ -99,15 +105,26 @@ def init():
         overwrite = input("Overwrite README.md? (y/n) [y]: ").strip().lower()
         overwrite_readme = overwrite != "n"
 
+    # -------- decide config saving --------
+    # ONLY save when user explicitly passes --save-config
+    save_config = bool(args.save_config)
+
     # -------- generate --------
     generate_project_from_base(
         project_name=project_name,
         env_name=env_name,
         python_version=python_version,
         run_command=run_command,
+        preset_key=preset_key,
         preset=preset,
         overwrite_readme=overwrite_readme,
+        save_config=save_config,
+        dry_run=args.dry_run,
     )
+
+    if args.dry_run:
+        print("\n🧪 Dry run complete — no files were written.")
+        return
 
     print("\nNext steps:")
     print(f"conda create -n {env_name} python={python_version} -y")

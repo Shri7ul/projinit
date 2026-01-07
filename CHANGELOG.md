@@ -4,7 +4,7 @@
 - Interactive + non-interactive CLI flags
 - Python version validation with retry UX
 - Auto-generated clean project structure and README
-- Backward compatibility for `projinit` (deprecated)
+- Backward compatibility for `initforge` (deprecated)
 
 ## v0.1.x
 - Initial CLI and template system

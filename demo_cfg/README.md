@@ -9,13 +9,13 @@ This project was bootstrapped using **projinit**.
 Create a new conda environment:
 
 ```bash
-conda create -n yt_env python=3.9 -y
+conda create -n yt python=3.9 -y
 ```
 
 Activate the environment:
 
 ``` bash
-conda activate yt_env
+conda activate yt
 ```
 📦 Install Dependencies
 ```bash
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ▶️ Run the Project
 ```bash
 
-python src/yt_transcriber/train.py
+python run.py
 ```
 🧪 Run Tests (optional)
 ```bash

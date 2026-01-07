@@ -29,7 +29,7 @@ pip install initforge
 
 Navigate to your project folder and run:
 ```bash
-projinit init
+initforge
 ```
 
 You’ll be guided through a few simple prompts:
